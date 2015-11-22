@@ -1,0 +1,20 @@
+{
+  "name": "sorted-search",
+  "description": "Sorts array based on things I am inventing as I go",
+  "version": "0.0.1",
+  "author": {
+    "name": "Julio Nobrega Netto",
+    "email": "inerte@gmail.com"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-airbnb": "latest",
+    "lodash": "latest",
+    "mocha": "latest"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint test/test.js index.js",
+    "prepublish": "npm run lint && npm run test",
+    "test": "./node_modules/.bin/mocha"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "ecmaFeatures": {
+    "modules": false
+  },
+  "env": {
+    "mocha": true,
+    "node": true
+  },
+  "extends": "airbnb/base",
+  "rules": {
+    "strict": [2, "global"]
+  }
+}
