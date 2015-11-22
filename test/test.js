@@ -5,7 +5,7 @@ const _ = require('lodash');
 const assert = require('assert');
 const sortedSearch = require('../index.js');
 
-var states = [
+let states = [
   'Alabama',
   'Alaska',
   'American Samoa',
@@ -90,7 +90,7 @@ describe('isAlphabeticallySorted helper test checker', function() {
 });
 
 describe('sortedSearch', function() {
-  beforeEach(function () {
+  beforeEach(function shuffleStates() {
     states = _.shuffle(states);
   });
 
@@ -108,5 +108,18 @@ describe('sortedSearch', function() {
     assert.strictEqual(_.first(sorted), 'California');
 
     assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
+  });
+
+  it('should put partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+    const sorted = sortedSearch.sortBy(states, 'new');
+
+    assert.deepEqual(_.take(sorted, 4), [
+      'New Hampshire',
+      'New Jersey',
+      'New Mexico',
+      'New York',
+    ]);
+
+    assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, 4)), true);
   });
 });

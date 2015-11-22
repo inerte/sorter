@@ -2,6 +2,10 @@
 
 const _ = require('lodash');
 
+function sortWithLocaleCompare(a, b) {
+  return a.localeCompare(b);
+}
+
 module.exports = {
   sortBy: function sortBy(haystack, needle) {
     const needleLower = needle.toLowerCase();
@@ -17,12 +21,11 @@ module.exports = {
 
     const startsWithMatch = rest.filter(function getPartialMatch(item) {
       return item.toLowerCase().startsWith(needleLower);
-    }).value();
+    }).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(startsWithMatch);
+    rest = lazyHaystack.remove(sortedPart);
 
-    rest = rest.sort(function sortRest(a, b) {
-      return a.localeCompare(b);
-    });
+    rest = rest.sort(sortWithLocaleCompare);
 
     return sortedPart.concat(rest.value());
   },
