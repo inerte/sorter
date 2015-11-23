@@ -17,13 +17,19 @@ module.exports = {
       return item.toLowerCase().localeCompare(needleLower) === 0;
     }).value();
     sortedPart = sortedPart.concat(exactMatch);
-    rest = lazyHaystack.remove(sortedPart);
+    rest = lazyHaystack.without(...exactMatch);
 
-    const startsWithMatch = rest.filter(function getPartialMatch(item) {
+    const startsWithMatch = rest.filter(function getStartsWithMatch(item) {
       return item.toLowerCase().startsWith(needleLower);
     }).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(startsWithMatch);
-    rest = lazyHaystack.remove(sortedPart);
+    rest = rest.without(...sortedPart);
+
+    const partialMatch = rest.filter(function getPartialMatch(item) {
+      return item.toLowerCase().includes(needleLower);
+    }).sort(sortWithLocaleCompare).value();
+    sortedPart = sortedPart.concat(partialMatch);
+    rest = rest.without(...sortedPart);
 
     rest = rest.sort(sortWithLocaleCompare);
 

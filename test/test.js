@@ -102,7 +102,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
   });
 
-  it('should put partial match at the top, all others in alphabetical order', function() {
+  it('should put starts with match at the top, all others in alphabetical order', function() {
     const sorted = sortedSearch.sortBy(states, 'californi');
 
     assert.strictEqual(_.first(sorted), 'California');
@@ -110,7 +110,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
   });
 
-  it('should put partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+  it('should put starts with matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
     const sorted = sortedSearch.sortBy(states, 'new');
 
     assert.deepEqual(_.take(sorted, 4), [
@@ -121,5 +121,36 @@ describe('sortedSearch', function() {
     ]);
 
     assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, 4)), true);
+  });
+
+  it('should put partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+    const sorted = sortedSearch.sortBy(states, 'outh');
+    let i = 0;
+
+    assert.strictEqual(sorted[i++], 'South Carolina');
+    assert.strictEqual(sorted[i++], 'South Dakota');
+
+    assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, i)), true);
+  });
+
+  it('should partition by exact match, starts with, partial match, and others, all alphabetically sorted', function() {
+    states.push('ne');
+    const sorted = sortedSearch.sortBy(states, 'ne');
+    let i = 0;
+
+    assert.strictEqual(sorted[i++], 'ne');
+    assert.strictEqual(sorted[i++], 'Nebraska');
+    assert.strictEqual(sorted[i++], 'Nevada');
+    assert.strictEqual(sorted[i++], 'New Hampshire');
+    assert.strictEqual(sorted[i++], 'New Jersey');
+    assert.strictEqual(sorted[i++], 'New Mexico');
+    assert.strictEqual(sorted[i++], 'New York');
+    assert.strictEqual(sorted[i++], 'Connecticut');
+    assert.strictEqual(sorted[i++], 'Federated States Of Micronesia');
+    assert.strictEqual(sorted[i++], 'Maine');
+    assert.strictEqual(sorted[i++], 'Minnesota');
+    assert.strictEqual(sorted[i++], 'Tennessee');
+
+    assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, i)), true);
   });
 });
