@@ -8,26 +8,26 @@ function sortWithLocaleCompare(a, b) {
 
 module.exports = {
   sortBy: function sortBy(haystack, needle) {
-    const needleLower = needle.toLowerCase();
-    const needleCharacters = needle.toLowerCase().split('');
+    const needleLower = needle.toLocaleLowerCase();
+    const needleCharacters = needle.toLocaleLowerCase().split('');
     const lazyHaystack = _([...haystack]);
     let sortedPart = [];
     let rest;
 
     const exactMatch = lazyHaystack.filter(function getExactMatch(item) {
-      return item.toLowerCase().localeCompare(needleLower) === 0;
+      return item.toLocaleLowerCase().localeCompare(needleLower) === 0;
     }).value();
     sortedPart = sortedPart.concat(exactMatch);
     rest = lazyHaystack.without(...exactMatch);
 
     const startsWithMatch = rest.filter(function getStartsWithMatch(item) {
-      return item.toLowerCase().startsWith(needleLower);
+      return item.toLocaleLowerCase().startsWith(needleLower);
     }).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(startsWithMatch);
     rest = rest.without(...sortedPart);
 
     const partialMatch = rest.filter(function getPartialMatch(item) {
-      return item.toLowerCase().includes(needleLower);
+      return item.toLocaleLowerCase().includes(needleLower);
     }).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(partialMatch);
     rest = rest.without(...sortedPart);
@@ -36,7 +36,7 @@ module.exports = {
       let i = 0;
       const needleCharactersClone = _.clone(needleCharacters);
 
-      const itemCharacters = item.toLowerCase().split('');
+      const itemCharacters = item.toLocaleLowerCase().split('');
 
       return itemCharacters.some(function (itemCharacter) {
         if (_.first(needleCharactersClone) === itemCharacter) {
