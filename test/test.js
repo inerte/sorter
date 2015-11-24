@@ -133,23 +133,32 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, i)), true);
   });
 
+  it('should put sequenced characters partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+    const sorted = sortedSearch.sortBy(states, 'clfri'); // Every other characters in "california"
+
+    assert.strictEqual(_.first(sorted), 'California');
+
+    assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
+  });
+
   it('should partition by exact match, starts with, partial match, and others, all alphabetically sorted', function() {
     states.push('ne');
     const sorted = sortedSearch.sortBy(states, 'ne');
     let i = 0;
 
-    assert.strictEqual(sorted[i++], 'ne');
-    assert.strictEqual(sorted[i++], 'Nebraska');
-    assert.strictEqual(sorted[i++], 'Nevada');
-    assert.strictEqual(sorted[i++], 'New Hampshire');
-    assert.strictEqual(sorted[i++], 'New Jersey');
-    assert.strictEqual(sorted[i++], 'New Mexico');
-    assert.strictEqual(sorted[i++], 'New York');
-    assert.strictEqual(sorted[i++], 'Connecticut');
-    assert.strictEqual(sorted[i++], 'Federated States Of Micronesia');
-    assert.strictEqual(sorted[i++], 'Maine');
-    assert.strictEqual(sorted[i++], 'Minnesota');
-    assert.strictEqual(sorted[i++], 'Tennessee');
+    assert.strictEqual(sorted[i++], 'ne'); // Exact match
+    assert.strictEqual(sorted[i++], 'Nebraska'); // Starts with
+    assert.strictEqual(sorted[i++], 'Nevada'); // Starts with
+    assert.strictEqual(sorted[i++], 'New Hampshire'); // Starts with
+    assert.strictEqual(sorted[i++], 'New Jersey'); // Starts with
+    assert.strictEqual(sorted[i++], 'New Mexico'); // Starts with
+    assert.strictEqual(sorted[i++], 'New York'); // Starts with
+    assert.strictEqual(sorted[i++], 'Connecticut'); // Partial match
+    assert.strictEqual(sorted[i++], 'Federated States Of Micronesia');  // Partial match
+    assert.strictEqual(sorted[i++], 'Maine');  // Partial match
+    assert.strictEqual(sorted[i++], 'Minnesota');  // Partial match
+    assert.strictEqual(sorted[i++], 'Tennessee');  // Partial match
+    assert.strictEqual(sorted[i++], 'Northern Mariana Islands'); // Has "n" and "e" in sequence
 
     assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, i)), true);
   });
