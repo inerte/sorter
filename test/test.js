@@ -99,7 +99,7 @@ describe('sortedSearch', function() {
 
     assert.strictEqual(_.first(sorted), 'California');
 
-    assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
+    assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
   it('should put starts with match at the top, all others in alphabetical order', function() {
@@ -107,7 +107,7 @@ describe('sortedSearch', function() {
 
     assert.strictEqual(_.first(sorted), 'California');
 
-    assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
+    assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
   it('should put starts with matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
@@ -138,7 +138,7 @@ describe('sortedSearch', function() {
 
     assert.strictEqual(_.first(sorted), 'California');
 
-    assert.strictEqual(isAlphabeticallySorted(_.rest(sorted)), true);
+    assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
   it('should partition by exact match, starts with, partial match, and others, all alphabetically sorted', function() {
