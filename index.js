@@ -33,15 +33,15 @@ module.exports = {
     rest = rest.without(...sortedPart);
 
     const charactersInSequenceMatch = rest.filter(item => {
-      const needleCharactersClone = _.clone(needleCharacters);
+      const needleCharactersCopy = needleCharacters.slice(0);
 
       const itemCharacters = item.toLocaleLowerCase().split('');
 
       return itemCharacters.some(itemCharacter => {
-        if (_.first(needleCharactersClone) === itemCharacter) {
-          needleCharactersClone.shift();
+        if (_.first(needleCharactersCopy) === itemCharacter) {
+          needleCharactersCopy.shift();
         }
-        return needleCharactersClone.length === 0;
+        return needleCharactersCopy.length === 0;
       });
     }).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(charactersInSequenceMatch);
