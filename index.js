@@ -14,31 +14,30 @@ module.exports = {
     let sortedPart = [];
     let rest;
 
-    const exactMatch = lazyHaystack.filter(function getExactMatch(item) {
-      return item.toLocaleLowerCase().localeCompare(needleLower) === 0;
-    }).value();
+    const exactMatch = lazyHaystack.filter(item =>
+      item.toLocaleLowerCase().localeCompare(needleLower) === 0
+    ).value();
     sortedPart = sortedPart.concat(exactMatch);
     rest = lazyHaystack.without(...exactMatch);
 
-    const startsWithMatch = rest.filter(function getStartsWithMatch(item) {
-      return item.toLocaleLowerCase().startsWith(needleLower);
-    }).sort(sortWithLocaleCompare).value();
+    const startsWithMatch = rest.filter(item =>
+      item.toLocaleLowerCase().startsWith(needleLower)
+    ).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(startsWithMatch);
     rest = rest.without(...sortedPart);
 
-    const partialMatch = rest.filter(function getPartialMatch(item) {
-      return item.toLocaleLowerCase().includes(needleLower);
-    }).sort(sortWithLocaleCompare).value();
+    const partialMatch = rest.filter(item =>
+      item.toLocaleLowerCase().includes(needleLower)
+    ).sort(sortWithLocaleCompare).value();
     sortedPart = sortedPart.concat(partialMatch);
     rest = rest.without(...sortedPart);
 
-    const charactersInSequenceMatch = rest.filter(function getCharactersInSequenceMatch(item) {
-      let i = 0;
+    const charactersInSequenceMatch = rest.filter(item => {
       const needleCharactersClone = _.clone(needleCharacters);
 
       const itemCharacters = item.toLocaleLowerCase().split('');
 
-      return itemCharacters.some(function (itemCharacter) {
+      return itemCharacters.some(itemCharacter => {
         if (_.first(needleCharactersClone) === itemCharacter) {
           needleCharactersClone.shift();
         }

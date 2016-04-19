@@ -1,4 +1,4 @@
-/* eslint func-names: 0 */
+/* eslint func-names: 0, prefer-arrow-callback: 0, max-len: 0 */
 'use strict';
 
 const _ = require('lodash');
@@ -75,26 +75,26 @@ function isAlphabeticallySorted(elements) {
   return _.isMatch(elementsCopy, elements);
 }
 
-describe('isAlphabeticallySorted helper test checker', function() {
-  it('should check if array is not alphabetically sorted', function() {
+describe('isAlphabeticallySorted helper test checker', function () {
+  it('should check if array is not alphabetically sorted', function () {
     const unsorted = ['Julio', 'Gustavo', 'Felipe'];
 
     assert.strictEqual(isAlphabeticallySorted(unsorted), false);
   });
 
-  it('should check if array is alphabetically sorted', function() {
+  it('should check if array is alphabetically sorted', function () {
     const sorted = ['Felipe', 'Gustavo', 'Julio'];
 
     assert.strictEqual(isAlphabeticallySorted(sorted), true);
   });
 });
 
-describe('sortedSearch', function() {
+describe('sortedSearch', function () {
   beforeEach(function shuffleStates() {
     states = _.shuffle(states);
   });
 
-  it('should put exact match at the top, all others in alphabetical order', function() {
+  it('should put exact match at the top, all others in alphabetical order', function () {
     const sorted = sortedSearch.sortBy(states, 'california');
 
     assert.strictEqual(_.first(sorted), 'California');
@@ -102,7 +102,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
-  it('should put starts with match at the top, all others in alphabetical order', function() {
+  it('should put starts with match at the top, all others in alphabetical order', function () {
     const sorted = sortedSearch.sortBy(states, 'californi');
 
     assert.strictEqual(_.first(sorted), 'California');
@@ -110,7 +110,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
-  it('should put starts with matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+  it('should put starts with matches (sorted alphabetically) at the top, all others in alphabetical order', function () {
     const sorted = sortedSearch.sortBy(states, 'new');
 
     assert.deepEqual(_.take(sorted, 4), [
@@ -123,7 +123,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, 4)), true);
   });
 
-  it('should put partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+  it('should put partial matches (sorted alphabetically) at the top, all others in alphabetical order', function () {
     const sorted = sortedSearch.sortBy(states, 'outh');
     let i = 0;
 
@@ -133,7 +133,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.drop(sorted, i)), true);
   });
 
-  it('should put sequenced characters partial matches (sorted alphabetically) at the top, all others in alphabetical order', function() {
+  it('should put sequenced characters partial matches (sorted alphabetically) at the top, all others in alphabetical order', function () {
     const sorted = sortedSearch.sortBy(states, 'clfri'); // Every other characters in "california"
 
     assert.strictEqual(_.first(sorted), 'California');
@@ -141,7 +141,7 @@ describe('sortedSearch', function() {
     assert.strictEqual(isAlphabeticallySorted(_.tail(sorted)), true);
   });
 
-  it('should partition by exact match, starts with, partial match, and others, all alphabetically sorted', function() {
+  it('should partition by exact match, starts with, partial match, and others, all alphabetically sorted', function () {
     states.push('ne');
     const sorted = sortedSearch.sortBy(states, 'ne');
     let i = 0;
